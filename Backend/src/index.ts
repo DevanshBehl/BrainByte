@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 import { connectDb , UserModel , TagModel, ContentModel , LinkModel} from "./db";
 import { auth } from "./middleware";
 import mongoose from "mongoose";
+import { random } from "./utils";
+import { hash } from "crypto";
 const app = express();
 app.use(express.json());
 connectDb();
@@ -98,4 +100,53 @@ app.delete("/api/v1/content",auth,async (req,res)=>{
     })
 })
 
+app.post("/api/v1/brain/share",auth,async (req,res)=>{
+    const share = req.body.share;
+    const userId = req.userID as mongoose.Types.ObjectId;
+    
+    if(share){
+        try{
+            const hash = random(20);
+            await LinkModel.create({
+            hash: hash,
+            userId:userId
+
+        })
+        res.json({
+        "message":"Updated shareable link",
+        "hash":hash
+    })}catch(e){
+        res.status(411).json({
+            "message":"sharelink already exist"
+        })
+    }
+    }else{
+        await LinkModel.deleteOne({
+            userId:userId
+        })
+        res.json({
+            "message":"disabled sharing"
+        })
+    }
+})
+
+app.get("/api/v1/brain/:shareLink", async (req, res) => {
+  try {
+    const hash = req.params.shareLink;
+
+    const link = await LinkModel
+      .findOne({ hash })
+      .populate("userId", "username");
+
+    if (!link) {
+      return res.status(404).json({ message: "Invalid share link" });
+    }
+
+    res.json({ link });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 app.listen(3000);

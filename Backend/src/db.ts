@@ -40,7 +40,7 @@ const TagsSchema = new Schema({
 
 const LinkSchema = new Schema({
     hash:{type:String,required:true},
-    userId:{type:mongoose.Schema.Types.ObjectId , ref:'User' , required:true }
+    userId:{type:mongoose.Schema.Types.ObjectId , ref:'User' , required:true, unique:true }
 })
 export const UserModel = mongoose.model("User",UserSchema);
 export const ContentModel= mongoose.model("Content",ContentSchema);
