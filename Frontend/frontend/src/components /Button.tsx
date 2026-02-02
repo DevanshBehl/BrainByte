@@ -12,14 +12,13 @@ const variantStyles ={
     "secondary":"bg-blue-200 text-blue-700"
 }
 const sizeStyles={
-    "lg":" m-4 py-2 px-8 rounded-xl",
-    "md":" py-2 px-6 m-4 rounded-xl",
-    "sm":" py-2 px-4 m-4 rounded-xl"
+    "lg":" m-3 py-3 px-6 rounded-xl",
+    "md":" py-2 px-6 m-3 rounded-xl",
+    "sm":" py-2 px-4 m-3 rounded-xl"
 }
-const defaultStyle="flex items-center cursor-pointer"
+const defaultStyle="flex items-center justify-center cursor-pointer"
 export const Button=(props : ButtonProps)=>{
-    return(<button  className={`${variantStyles[props.variant]} ${sizeStyles[props.size]} ${defaultStyle}`}> {props.startIcon}<div className="pr-2 pl-2">{props.text}</div>{props.endIcon} </button>)
+    return(<button onClick={props.onClick}  className={`${variantStyles[props.variant]} ${sizeStyles[props.size]} ${defaultStyle}`}> {props.startIcon}<div className="pr-2 pl-2">{props.text}</div>{props.endIcon} </button>)
 };
 
-
-// 45:12 
+// 47:29

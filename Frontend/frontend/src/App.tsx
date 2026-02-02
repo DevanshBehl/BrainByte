@@ -1,18 +1,21 @@
+import { useState } from "react";
 import { Button } from "./components /Button";
+import { Card } from "./components /Card";
+import { ContentModal } from "./components /ContentModal";
 import { PlusIcon } from "./icons/PlusIcon";
+import { ShareIcon } from "./icons/ShareIcon";
 
 function App(){
-  return (<>
-    <Button variant="primary" size="lg" onClick={()=>{
-      console.log("working");
-    }} text="SignUp" startIcon={<PlusIcon size={"lg"}/>}/>
-    <Button variant="secondary" size="md" onClick={()=>{
-      console.log("wokring");
-    }} text="SignUp" startIcon={<PlusIcon size={"lg"}/>}/>
-    <Button variant="primary" size="md" onClick={()=>{
-      console.log("wokring");
-    }} text="SignUp" startIcon={<PlusIcon size={"sm"}/>}/>
-    </>
+  const [modalOpen,setModalOpen]=useState(false);
+  return (<div >
+    <ContentModal open={modalOpen} onClose={()=>{setModalOpen(false)}}/>
+  <div className="flex justify-end">
+    <Button variant="primary" size="md" text="Add content" onClick={()=>{setModalOpen(true)}} startIcon={<PlusIcon size="md"/>}/>
+    <Button variant="secondary" size="md" onClick={()=>{console.log()}} text="Share Brain" startIcon={<ShareIcon size="md"/>}/>
+  </div>
+    
+    <Card title="Youtube" type="youtube" link="https://www.youtube.com/watch?v=kIEh73-8Bm4"/>
+    </div>
   )
 }
 export default App;
