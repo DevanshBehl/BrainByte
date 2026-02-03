@@ -7,8 +7,13 @@ import { auth } from "./middleware";
 import mongoose from "mongoose";
 import { random } from "./utils";
 import { hash } from "crypto";
+import cors from "cors";
+
 const app = express();
+
 app.use(express.json());
+app.use(cors())
+
 connectDb();
 const JWT_KEY=process.env.JWT_KEY;
 if(!JWT_KEY){
